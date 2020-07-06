@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Folder, Note } from "./notes.component";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Folder, Note } from './notes.component';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class NotesService {
-  private apiURL = "http://localhost:3000";
+  private apiURL = 'https://notes-json-demo.herokuapp.com';
 
   constructor(private _http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class NotesService {
     return this._http
       .post<Folder>(`${this.apiURL}/folders`, folder, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
       .toPromise();
@@ -41,7 +41,7 @@ export class NotesService {
       this._http
         .post<Note>(`${this.apiURL}/notes`, note, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         })
         .toPromise()
@@ -57,7 +57,7 @@ export class NotesService {
       this._http
         .put<Note>(`${this.apiURL}/notes/${note.id}`, note, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         })
         .toPromise()
