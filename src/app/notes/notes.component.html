@@ -1,0 +1,107 @@
+<mat-drawer-container class="app-drawer-container" fullscreen>
+  <mat-drawer #drawer class="drawer" mode="side" [opened]="true">
+    <div class="side-header">Notes</div>
+    <div class="sidenav">
+      <img
+        #folder
+        style="width: 30px;"
+        (click)="toggleNewFolderInput()"
+        src="./../../assets/images/add.png"
+        alt="add-folder"
+      />
+      <span class="text">New Folder</span>
+    </div>
+    <div>
+      <div *ngIf="showFolderInput">
+        <form (ngSubmit)="addFolder()">
+          <input
+            #folderNameInput
+            type="text"
+            autofocus
+            (blur)="onBlurMethod()"
+          />
+        </form>
+      </div>
+      <div *ngFor="let folder of folders">
+        <p
+          class="list"
+          (click)="switchFolder(folder.id)"
+          [ngClass]="{
+            highlightFolder: selectedFolderId === folder.id
+          }"
+        >
+          {{ folder.name }}
+          <img
+            *ngIf="selectedFolderId === folder.id"
+            class="delete-icon"
+            (click)="deleteFolder()"
+            src="./../../assets/images/delete.png"
+            alt="delete-notes"
+          />
+        </p>
+      </div>
+    </div>
+  </mat-drawer>
+  <div class="row notes-page">
+    <div class="column notes-file">
+      <div class="menu">
+        <span class="folder-name">
+          {{ selectedFolderName }}
+        </span>
+        <span>
+          <img
+            (click)="showAddNote && addNote()"
+            src="./../../assets/images/edit.png"
+            alt="sidenav-menu"
+          /><img
+            (click)="drawer.toggle()"
+            src="./../../assets/images/menu.png"
+            alt="sidenav-menu"
+          />
+        </span>
+      </div>
+      <div
+        *ngFor="let note of notes"
+        (click)="switchNote(note.id)"
+        [ngClass]="{
+          highlightNote: selectedNoteId === note.id
+        }"
+      >
+        <div class="notes-list">
+          <div>
+            <div class="title text-wrap">
+              {{ note.title }}
+            </div>
+            <div class="text-wrap">
+              {{ note.preview }}
+            </div>
+            <div>
+              <span *ngIf="note.id" class="update-time">{{
+                note.updatedAt | date: 'shortTime'
+              }}</span>
+            </div>
+          </div>
+          <img
+            *ngIf="selectedNoteId === note.id || selectedNoteId === 0"
+            (click)="deleteNote()"
+            src="./../../assets/images/delete.png"
+            alt="delete-notes"
+          />
+        </div>
+        <div class="bottom-line"></div>
+      </div>
+    </div>
+    <div class="column notes-editor">
+      <div *ngIf="notes[selectedNoteIndex]">
+        <div class="updated-time">
+          {{ notes[selectedNoteIndex].updatedAt | date: 'medium' }}
+        </div>
+        <textarea
+          #textFocus
+          [formControl]="form.get('auditTime')"
+          [attr.disabled]="!showAddNote ? true : null"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</mat-drawer-container>
