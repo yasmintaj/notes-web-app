@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "angular-cli-ghpages": "^0.5.3",
     "core-js": "^2.5.4",
     "json-server": "^0.16.1",
     "ng-click-outside": "^6.0.0",
